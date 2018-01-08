@@ -66,6 +66,11 @@ Schema.User = new SimpleSchema({
         type: Schema.UserProfile,
         optional: true
     },
+    services: {
+        type: Object,
+        optional: true,
+        blackbox: true
+    },
     roles: {
         type: Object,
         optional: true,

@@ -46,7 +46,9 @@ export default class Signup extends React.Component{
 	    this.setState({
 	    	loading: true
 	    })
-	    Accounts.createUser({ email: email, password: password, profile: profile }, (error) => {
+
+	    Meteor.call('addUser',{ email: email, password: password, profile: profile }, (error, res) => {
+	      	console.log(12)
 	      	if(error) {
 		      	this.setState({
 			    	loading: false,
@@ -57,8 +59,14 @@ export default class Signup extends React.Component{
 	      		this.setState({
 			    	loading: false,
 			    })
-		        let user_id = Meteor.userId();
-		        let role_name = "Admin";
+			    Meteor.loginWithPassword(email, password, function(err) {
+                    if (err) {
+                        console.log('login error', err);
+                    } else {
+				        let user_id = Meteor.userId();
+				        let role_name = "Admin";
+                    }
+                })
 	        // Meteor.call("editUser", data,user_id,role_name, (error, result) => {
 	        //   if(error) {
 	        //     console.log("error :"+error);
